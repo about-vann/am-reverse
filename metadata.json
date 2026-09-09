@@ -1,0 +1,8 @@
+{
+  "name": "am — activate",
+  "description": "Alight Motion premium magic link activation tool",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
