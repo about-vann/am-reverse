@@ -10,10 +10,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('am_theme');
+      var isDark = saved ? (saved === 'dark') : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (isDark) document.documentElement.setAttribute('data-theme', 'dark');
+    } catch(e) {}
+  })();
+</script>
 <style>
 :root {
   --bg-page: #FBF9F5;
   --card-bg: #FFFFFF;
+  --subtle-bg: #FAF8F2;
+  --input-bg: #FFFFFF;
   --dark: #1A1A1E;
   --dark-soft: #2E2E35;
   --muted: #666670;
@@ -30,6 +41,13 @@
   --red-border: #DC2626;
   --accent-blue: #3B82F6;
   --blue-bg: #EFF6FF;
+  --verified-bg: #E0F2FE;
+  --verified-txt: #0369A1;
+  --spam-txt: #78350F;
+  --spam-strong: #92400E;
+  --stat-highlight: #B45309;
+  --divider: #E5E5EA;
+  --dot-color: #E8E5DD;
   --shadow-main: 4px 4px 0px var(--border);
   --shadow-sm: 2.5px 2.5px 0px var(--border);
   --shadow-hover: 6px 6px 0px var(--border);
@@ -37,6 +55,39 @@
   --radius-md: 12px;
   --radius-sm: 8px;
   --radius-full: 9999px;
+}
+
+[data-theme="dark"] {
+  --bg-page: #121216;
+  --card-bg: #1C1C23;
+  --subtle-bg: #16161D;
+  --input-bg: #14141A;
+  --dark: #F4F4F8;
+  --dark-soft: #D4D4DE;
+  --muted: #9C9CA8;
+  --muted-light: #6E6E7D;
+  --border: #3A3A4A;
+  --primary: #FAAE2B;
+  --primary-hover: #FBBF24;
+  --primary-light: #2A2113;
+  --accent-green: #22C55E;
+  --green-bg: #11281A;
+  --green-border: #22C55E;
+  --accent-red: #F87171;
+  --red-bg: #2B1414;
+  --red-border: #EF4444;
+  --accent-blue: #60A5FA;
+  --blue-bg: #172554;
+  --verified-bg: #162B3F;
+  --verified-txt: #7DD3FC;
+  --spam-txt: #FDE68A;
+  --spam-strong: #FBBF24;
+  --stat-highlight: #FBBF24;
+  --divider: #2C2C3A;
+  --dot-color: #262632;
+  --shadow-main: 4px 4px 0px #09090C;
+  --shadow-sm: 2.5px 2.5px 0px #09090C;
+  --shadow-hover: 6px 6px 0px #09090C;
 }
 
 * {
@@ -56,9 +107,9 @@ body {
   display: flex;
   justify-content: center;
   padding: 36px 16px 60px;
-  background-image: 
-    radial-gradient(#E8E5DD 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
   background-size: 24px 24px;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .container {
@@ -67,6 +118,53 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
+}
+
+/* Floating Theme Toggle Button */
+.theme-toggle-floating {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  color: var(--dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease;
+  outline: none;
+  padding: 0;
+}
+
+.theme-toggle-floating:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hover);
+  background: var(--subtle-bg);
+}
+
+.theme-toggle-floating:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--border);
+}
+
+.theme-toggle-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-toggle-floating:hover .theme-toggle-icon {
+  transform: rotate(15deg);
 }
 
 /* Saweria-style Creator Header Card */
@@ -78,7 +176,7 @@ body {
   padding: 20px 22px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .creator-top {
@@ -100,6 +198,7 @@ body {
   justify-content: center;
   font-size: 24px;
   flex-shrink: 0;
+  color: #1A1A1E;
 }
 
 .creator-info {
@@ -122,8 +221,8 @@ body {
 }
 
 .badge-verified {
-  background: #E0F2FE;
-  color: #0369A1;
+  background: var(--verified-bg);
+  color: var(--verified-txt);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-full);
   font-size: 10.5px;
@@ -147,16 +246,17 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   padding-top: 14px;
-  border-top: 2px dashed #E5E5EA;
+  border-top: 2px dashed var(--divider);
 }
 
 .stat-item {
-  background: var(--bg-page);
+  background: var(--subtle-bg);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-md);
   padding: 8px 12px;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .stat-label {
@@ -178,7 +278,7 @@ body {
 }
 
 .stat-val.highlight {
-  color: #B45309;
+  color: var(--stat-highlight);
 }
 
 .pulse-dot {
@@ -200,11 +300,12 @@ body {
 .stepper-wrap {
   display: flex;
   gap: 6px;
-  background: #EFECE6;
+  background: var(--subtle-bg);
   padding: 5px;
   border: 2px solid var(--border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .step-btn {
@@ -225,15 +326,15 @@ body {
 
 .step-btn.on {
   background: var(--primary);
-  color: var(--dark);
+  color: #1A1A1E;
   border-color: var(--border);
   box-shadow: 1.5px 1.5px 0px var(--border);
 }
 
 .step-btn.done {
-  background: #FFFFFF;
+  background: var(--card-bg);
   color: var(--dark);
-  border-color: #D1D1D6;
+  border-color: var(--border);
 }
 
 .step-btn.done::after {
@@ -250,6 +351,7 @@ body {
   box-shadow: var(--shadow-main);
   padding: 22px;
   position: relative;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card-heading {
@@ -287,7 +389,7 @@ label {
 
 .input-field {
   width: 100%;
-  background: #FFFFFF;
+  background: var(--input-bg);
   border: 2px solid var(--border);
   border-radius: var(--radius-md);
   color: var(--dark);
@@ -302,7 +404,7 @@ label {
 
 .input-field:focus {
   border-color: var(--border);
-  background: #FEFDF9;
+  background: var(--card-bg);
   box-shadow: 3px 3px 0px var(--primary);
   transform: translateY(-1px);
 }
@@ -338,7 +440,7 @@ button {
 button.primary {
   width: 100%;
   background: var(--primary);
-  color: var(--dark);
+  color: #1A1A1E;
   box-shadow: var(--shadow-sm);
 }
 
@@ -354,13 +456,13 @@ button.primary:active:not(:disabled) {
 }
 
 button.sec {
-  background: #FFFFFF;
+  background: var(--card-bg);
   color: var(--dark);
   box-shadow: var(--shadow-sm);
 }
 
 button.sec:hover:not(:disabled) {
-  background: #F4F4F6;
+  background: var(--subtle-bg);
   transform: translate(-1.5px, -1.5px);
   box-shadow: 4px 4px 0px var(--border);
 }
@@ -398,16 +500,16 @@ button:disabled {
 .msg.err {
   display: block;
   background: var(--red-bg);
-  border-color: var(--border);
-  color: #991B1B;
+  border-color: var(--red-border);
+  color: var(--accent-red);
   box-shadow: var(--shadow-sm);
 }
 
 .msg.ok {
   display: block;
   background: var(--green-bg);
-  border-color: var(--border);
-  color: #14532D;
+  border-color: var(--green-border);
+  color: var(--accent-green);
   box-shadow: var(--shadow-sm);
 }
 
@@ -423,6 +525,7 @@ button:disabled {
   gap: 10px;
   box-shadow: 2.5px 2.5px 0px var(--border);
   animation: subtleBounce 0.4s ease-out;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .spam-icon {
@@ -433,12 +536,12 @@ button:disabled {
 
 .spam-text {
   font-size: 12px;
-  color: #78350F;
+  color: var(--spam-txt);
   line-height: 1.5;
 }
 
 .spam-text strong {
-  color: #92400E;
+  color: var(--spam-strong);
   font-weight: 800;
   display: block;
   margin-bottom: 2px;
@@ -446,12 +549,13 @@ button:disabled {
 
 /* Key-Value details on Success */
 .result-box {
-  background: #FAF9F5;
+  background: var(--subtle-bg);
   border: 2px solid var(--border);
   border-radius: var(--radius-md);
   padding: 12px 14px;
   margin-bottom: 14px;
   box-shadow: 2px 2px 0px var(--border);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .kv {
@@ -459,7 +563,7 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1.5px dashed #E5E5EA;
+  border-bottom: 1.5px dashed var(--divider);
   font-size: 12.5px;
 }
 
@@ -483,7 +587,7 @@ button:disabled {
 }
 
 .token-area {
-  background: #FFFFFF;
+  background: var(--input-bg);
   border: 2px solid var(--border);
   border-radius: var(--radius-md);
   padding: 10px 12px;
@@ -496,6 +600,7 @@ button:disabled {
   line-height: 1.5;
   margin-bottom: 10px;
   box-shadow: inset 1px 1px 0px rgba(0,0,0,0.06);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 /* Accordion / Panduan Tata Cara */
@@ -505,7 +610,7 @@ button:disabled {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-main);
   padding: 18px 20px;
-  transition: all 0.2s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .guide-header {
@@ -526,7 +631,7 @@ button:disabled {
 }
 
 .toggle-pill {
-  background: #EFECE6;
+  background: var(--subtle-bg);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-full);
   font-size: 11px;
@@ -536,13 +641,13 @@ button:disabled {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.25s ease, color 0.25s ease;
 }
 
 .guide-content {
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 2px dashed #E5E5EA;
+  border-top: 2px dashed var(--divider);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -570,6 +675,7 @@ button:disabled {
   font-weight: 800;
   flex-shrink: 0;
   box-shadow: 1px 1px 0px var(--border);
+  color: #1A1A1E;
 }
 
 .guide-step-body strong {
@@ -578,12 +684,12 @@ button:disabled {
 }
 
 .guide-step-body .highlight-badge {
-  background: #FEF3C7;
-  color: #92400E;
+  background: var(--primary-light);
+  color: var(--primary-hover);
   padding: 1px 5px;
   border-radius: 4px;
   font-weight: 700;
-  border: 1px solid #F59E0B;
+  border: 1px solid var(--primary);
 }
 
 /* Micro Animations */
@@ -646,6 +752,16 @@ footer a {
 </style>
 </head>
 <body>
+
+<!-- Floating Theme Toggle in Corner -->
+<button class="theme-toggle-floating" id="theme-toggle-btn" aria-label="Ganti Tema" title="Ganti Tema (Gelap / Terang)">
+  <span class="theme-toggle-icon" id="theme-toggle-icon">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </span>
+</button>
+
 <div class="container">
 
   <!-- Saweria Style Header Profile Card -->
@@ -745,7 +861,7 @@ footer a {
   <!-- Step 3: Success & Token -->
   <main class="main-card panel-animate hide" id="p3">
     <div class="card-heading">
-      <h2 style="color: #15803D;">🎉 Premium Berhasil Aktif!</h2>
+      <h2 style="color: var(--accent-green);">🎉 Premium Berhasil Aktif!</h2>
       <p class="hint">Akun Alight Motion kamu sekarang sudah berstatus Premium. Detail akun dan token dapat disalin di bawah ini.</p>
     </div>
 
@@ -839,6 +955,54 @@ footer a {
 
 <script>
 const $ = i => document.getElementById(i)
+
+// Theme Toggle Management
+const themeBtn = $('theme-toggle-btn')
+const themeIcon = $('theme-toggle-icon')
+
+const sunIconSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
+
+const moonIconSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`
+
+function getInitialTheme() {
+  const saved = localStorage.getItem('am_theme')
+  if (saved) return saved
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
+}
+
+function updateThemeUI(theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    themeBtn.setAttribute('aria-label', 'Ganti ke mode terang')
+    themeBtn.title = 'Ganti ke mode terang (Light)'
+    themeIcon.innerHTML = sunIconSvg
+  } else {
+    document.documentElement.removeAttribute('data-theme')
+    themeBtn.setAttribute('aria-label', 'Ganti ke mode gelap')
+    themeBtn.title = 'Ganti ke mode malam (Dark)'
+    themeIcon.innerHTML = moonIconSvg
+  }
+}
+
+let currentTheme = getInitialTheme()
+updateThemeUI(currentTheme)
+
+themeBtn.onclick = () => {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark'
+  try {
+    localStorage.setItem('am_theme', currentTheme)
+  } catch (e) {}
+  updateThemeUI(currentTheme)
+}
+
+if (window.matchMedia) {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('am_theme')) {
+      currentTheme = e.matches ? 'dark' : 'light'
+      updateThemeUI(currentTheme)
+    }
+  })
+}
 
 // Load Live Stats
 function refreshStats() {
@@ -972,7 +1136,7 @@ $('b4').onclick = () => {
   navigator.clipboard.writeText(token).then(() => {
     const orig = $('b4').innerHTML
     $('b4').innerHTML = '<span>✅</span> Tersalin!'
-    $('b4').style.background = '#22C55E'
+    $('b4').style.background = 'var(--accent-green)'
     $('b4').style.color = '#FFFFFF'
     setTimeout(() => {
       $('b4').innerHTML = orig
