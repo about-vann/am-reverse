@@ -3,11 +3,11 @@ const path = require('path')
 const apiRoutes = require('./app/api/route')
 
 const app = express()
-const PORT = 3300
 
 app.use(require('cors')())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
 app.use(express.static(path.join(__dirname, 'public'), {
   etag: true,
   lastModified: true,
@@ -20,6 +20,13 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 app.use('/api', apiRoutes)
 
-app.listen(PORT, () => {
-  console.log(`server jalan di http://localhost:${PORT}`)
-})
+// Vercel runs this file as a serverless function through api/index.js.
+// Keep a local start method for traditional Node hosting/development.
+if (require.main === module) {
+  const PORT = process.env.PORT || 3300
+  app.listen(PORT, () => {
+    console.log(`server jalan di http://localhost:${PORT}`)
+  })
+}
+
+module.exports = app
