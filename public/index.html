@@ -3,215 +3,1016 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>am — activate</title>
-<meta name="description" content="Alight Motion premium magic link activation tool">
-<meta property="og:title" content="am — activate">
-<meta property="og:description" content="Alight Motion premium magic link activation tool">
+<title>am — activate | Alight Motion Premium</title>
+<meta name="description" content="Aktivasi Alight Motion Premium instan lewat Magic Link tanpa password. Mudah, cepat, dan aman.">
+<meta property="og:title" content="am — activate | Alight Motion Premium">
+<meta property="og:description" content="Aktivasi Alight Motion Premium instan lewat Magic Link tanpa password.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0b;
-  --panel: #111113;
-  --line: #232326;
-  --txt: #e8e8ea;
-  --dim: #8a8a91;
-  --acc: #5ec269;
-  --acc-dim: #2c4a30;
-  --red: #e05252;
+  --bg-page: #FBF9F5;
+  --card-bg: #FFFFFF;
+  --dark: #1A1A1E;
+  --dark-soft: #2E2E35;
+  --muted: #666670;
+  --muted-light: #90909A;
+  --border: #1A1A1E;
+  --primary: #FAAE2B;
+  --primary-hover: #F29E15;
+  --primary-light: #FFF6E5;
+  --accent-green: #22C55E;
+  --green-bg: #EDFDF2;
+  --green-border: #16A34A;
+  --accent-red: #EF4444;
+  --red-bg: #FEF2F2;
+  --red-border: #DC2626;
+  --accent-blue: #3B82F6;
+  --blue-bg: #EFF6FF;
+  --shadow-main: 4px 4px 0px var(--border);
+  --shadow-sm: 2.5px 2.5px 0px var(--border);
+  --shadow-hover: 6px 6px 0px var(--border);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-full: 9999px;
 }
-* { margin: 0; padding: 0; box-sizing: border-box }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
-  background: var(--bg);
-  color: var(--txt);
-  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
-  font-size: 13px;
+  background-color: var(--bg-page);
+  color: var(--dark);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 48px 16px;
+  padding: 36px 16px 60px;
+  background-image: 
+    radial-gradient(#E8E5DD 1px, transparent 1px);
+  background-size: 24px 24px;
 }
-.wrap { width: 100%; max-width: 460px }
 
-header { border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 20px }
-header h1 { font-size: 15px; font-weight: 600; letter-spacing: .02em }
-header h1 span { color: var(--acc) }
-header p { color: var(--dim); font-size: 12px; margin-top: 2px }
+.container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-.steps { display: flex; gap: 0; margin-bottom: 18px; font-size: 11px }
-.steps div { flex: 1; padding: 6px 0; border-bottom: 2px solid var(--line); color: var(--dim) }
-.steps div.on { border-color: var(--acc); color: var(--txt) }
-.steps div.done { border-color: var(--acc-dim); color: var(--acc) }
+/* Saweria-style Creator Header Card */
+.creator-card {
+  background: var(--card-bg);
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-main);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  padding: 18px;
+.creator-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   margin-bottom: 14px;
 }
-.panel h2 { font-size: 13px; font-weight: 600; margin-bottom: 4px }
-.panel .hint { color: var(--dim); font-size: 11.5px; margin-bottom: 14px }
-label { display: block; color: var(--dim); font-size: 11px; margin-bottom: 5px; letter-spacing: .03em }
-input {
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 2px 2px 0px var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.creator-info {
+  flex: 1;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.title-row h1 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--dark);
+  line-height: 1.2;
+}
+
+.badge-verified {
+  background: #E0F2FE;
+  color: #0369A1;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.creator-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* Stats Ribbon */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 2px dashed #E5E5EA;
+}
+
+.stat-item {
+  background: var(--bg-page);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-top: 2px;
+}
+
+.stat-val.highlight {
+  color: #B45309;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* Saweria-style Stepper Bar */
+.stepper-wrap {
+  display: flex;
+  gap: 6px;
+  background: #EFECE6;
+  padding: 5px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.step-btn {
+  flex: 1;
+  text-align: center;
+  padding: 7px 4px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+  border: 1.5px solid transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.step-btn.on {
+  background: var(--primary);
+  color: var(--dark);
+  border-color: var(--border);
+  box-shadow: 1.5px 1.5px 0px var(--border);
+}
+
+.step-btn.done {
+  background: #FFFFFF;
+  color: var(--dark);
+  border-color: #D1D1D6;
+}
+
+.step-btn.done::after {
+  content: "✓";
+  color: var(--accent-green);
+  font-weight: 800;
+}
+
+/* Main Form Card */
+.main-card {
+  background: var(--card-bg);
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-main);
+  padding: 22px;
+  position: relative;
+}
+
+.card-heading {
+  margin-bottom: 16px;
+}
+
+.card-heading h2 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.card-heading p {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Forms and Inputs */
+.form-group {
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark-soft);
+  margin-bottom: 6px;
+}
+
+.input-field {
   width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--line);
-  color: var(--txt);
-  font: inherit;
-  padding: 9px 11px;
-  outline: none;
-}
-input:focus { border-color: var(--acc) }
-button {
-  background: var(--acc);
-  color: #06130a;
-  border: none;
-  font: inherit;
+  background: #FFFFFF;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--dark);
+  font-family: inherit;
+  font-size: 13.5px;
   font-weight: 600;
-  padding: 9px 18px;
+  padding: 11px 14px;
+  outline: none;
+  transition: all 0.15s ease;
+  box-shadow: inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+
+.input-field:focus {
+  border-color: var(--border);
+  background: #FEFDF9;
+  box-shadow: 3px 3px 0px var(--primary);
+  transform: translateY(-1px);
+}
+
+.input-field::placeholder {
+  color: var(--muted-light);
+  font-weight: 400;
+}
+
+/* Saweria Signature Buttons */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 12px;
+  border-radius: var(--radius-md);
+  padding: 11px 20px;
+  border: 2px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
 }
-button.sec { background: transparent; color: var(--dim); border: 1px solid var(--line) }
-button:disabled { opacity: .45; cursor: wait }
 
-.msg { padding: 9px 12px; font-size: 12px; margin: 12px 0; display: none }
-.msg.err { display: block; background: #2a1414; border: 1px solid #4a2020; color: var(--red) }
-.msg.ok { display: block; background: #12201a; border: 1px solid var(--acc-dim); color: var(--acc) }
-
-.kv { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12px }
-.kv:last-child { border-bottom: none }
-.kv b { color: var(--dim); font-weight: 400 }
-.kv span { color: var(--txt); text-align: right; word-break: break-all; max-width: 60% }
-.tok {
-  background: var(--bg); border: 1px solid var(--line);
-  padding: 9px 11px; font-size: 10.5px; word-break: break-all;
-  color: var(--dim); max-height: 90px; overflow: hidden;
+button.primary {
+  width: 100%;
+  background: var(--primary);
+  color: var(--dark);
+  box-shadow: var(--shadow-sm);
 }
-button.tiny { margin: 0; padding: 4px 10px; font-size: 11px }
-footer { margin-top: 26px; color: #3f3f44; font-size: 10.5px; text-align: center }
-.hide { display: none }
+
+button.primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 4px 4px 0px var(--border);
+}
+
+button.primary:active:not(:disabled) {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 1px 1px 0px var(--border);
+}
+
+button.sec {
+  background: #FFFFFF;
+  color: var(--dark);
+  box-shadow: var(--shadow-sm);
+}
+
+button.sec:hover:not(:disabled) {
+  background: #F4F4F6;
+  transform: translate(-1.5px, -1.5px);
+  box-shadow: 4px 4px 0px var(--border);
+}
+
+button.sec:active:not(:disabled) {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 1px 1px 0px var(--border);
+}
+
+button.tiny {
+  padding: 6px 12px;
+  font-size: 11.5px;
+  border-radius: var(--radius-sm);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: 1.5px 1.5px 0px var(--border) !important;
+}
+
+/* Alerts / Notification Callout */
+.msg {
+  padding: 10px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  margin-top: 14px;
+  display: none;
+  border: 2px solid var(--border);
+  animation: fadeIn 0.25s ease-out;
+}
+
+.msg.err {
+  display: block;
+  background: var(--red-bg);
+  border-color: var(--border);
+  color: #991B1B;
+  box-shadow: var(--shadow-sm);
+}
+
+.msg.ok {
+  display: block;
+  background: var(--green-bg);
+  border-color: var(--border);
+  color: #14532D;
+  box-shadow: var(--shadow-sm);
+}
+
+/* SPAM NOTICE CARD (Saweria Friendly Style) */
+.spam-alert {
+  background: var(--primary-light);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin: 14px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  box-shadow: 2.5px 2.5px 0px var(--border);
+  animation: subtleBounce 0.4s ease-out;
+}
+
+.spam-icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.spam-text {
+  font-size: 12px;
+  color: #78350F;
+  line-height: 1.5;
+}
+
+.spam-text strong {
+  color: #92400E;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Key-Value details on Success */
+.result-box {
+  background: #FAF9F5;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  box-shadow: 2px 2px 0px var(--border);
+}
+
+.kv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1.5px dashed #E5E5EA;
+  font-size: 12.5px;
+}
+
+.kv:last-child {
+  border-bottom: none;
+}
+
+.kv b {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.kv span {
+  color: var(--dark);
+  font-weight: 700;
+  text-align: right;
+  word-break: break-all;
+  max-width: 65%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+}
+
+.token-area {
+  background: #FFFFFF;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  word-break: break-all;
+  color: var(--dark);
+  max-height: 95px;
+  overflow-y: auto;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  box-shadow: inset 1px 1px 0px rgba(0,0,0,0.06);
+}
+
+/* Accordion / Panduan Tata Cara */
+.guide-card {
+  background: var(--card-bg);
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-main);
+  padding: 18px 20px;
+  transition: all 0.2s ease;
+}
+
+.guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.guide-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.toggle-pill {
+  background: #EFECE6;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  color: var(--dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.2s ease;
+}
+
+.guide-content {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 2px dashed #E5E5EA;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--dark-soft);
+}
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  background: var(--primary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 1px 1px 0px var(--border);
+}
+
+.guide-step-body strong {
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.guide-step-body .highlight-badge {
+  background: #FEF3C7;
+  color: #92400E;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 700;
+  border: 1px solid #F59E0B;
+}
+
+/* Micro Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes subtleBounce {
+  0% { transform: scale(0.98); }
+  50% { transform: scale(1.01); }
+  100% { transform: scale(1); }
+}
+
+.panel-animate {
+  animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+footer {
+  margin-top: 8px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+footer a {
+  color: var(--dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hide {
+  display: none !important;
+}
+
+/* Spinner inside button */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--dark);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="container">
 
-<header>
-  <h1>am <span>/</span> activate <span style="color:var(--dim);font-weight:400">by neo</span></h1>
-  <p>alight motion premium — magic link activation</p>
-</header>
+  <!-- Saweria Style Header Profile Card -->
+  <header class="creator-card" id="header-card">
+    <div class="creator-top">
+      <div class="avatar" id="app-avatar">⚡</div>
+      <div class="creator-info">
+        <div class="title-row">
+          <h1 id="app-title">am / activate</h1>
+          <span class="badge-verified" id="verified-badge">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+            Resmi
+          </span>
+        </div>
+        <p class="creator-desc" id="app-desc">Alight Motion Premium — Aktivasi instan via Magic Link</p>
+      </div>
+    </div>
 
-<div class="steps">
-  <div id="n1" class="on">01 email</div>
-  <div id="n2">02 link</div>
-  <div id="n3">03 done</div>
-</div>
+    <!-- Live Counter -->
+    <div class="stats-grid">
+      <div class="stat-item" id="stat-card-total">
+        <span class="stat-label">
+          <span class="pulse-dot"></span> TOTAL AKTIVASI
+        </span>
+        <span class="stat-val" id="st-total">-</span>
+      </div>
+      <div class="stat-item" id="stat-card-today">
+        <span class="stat-label">⚡ HARI INI</span>
+        <span class="stat-val highlight" id="st-today">-</span>
+      </div>
+    </div>
+  </header>
 
-<div class="panel" style="display:flex;justify-content:space-between;align-items:center">
-  <div>
-    <div style="color:var(--dim);font-size:10.5px;letter-spacing:.05em">TOTAL AKTIVASI</div>
-    <div style="font-size:20px;font-weight:600;color:var(--acc)" id="st-total">-</div>
-  </div>
-  <div style="text-align:right">
-    <div style="color:var(--dim);font-size:10.5px;letter-spacing:.05em">HARI INI</div>
-    <div style="font-size:20px;font-weight:600" id="st-today">-</div>
-  </div>
-</div>
+  <!-- Step Bar (Saweria Pill Style) -->
+  <nav class="stepper-wrap" aria-label="Langkah Aktivasi" id="stepper-nav">
+    <div id="n1" class="step-btn on">01 Email</div>
+    <div id="n2" class="step-btn">02 Magic Link</div>
+    <div id="n3" class="step-btn">03 Selesai</div>
+  </nav>
 
-<div class="panel" id="p1">
-  <h2>masukkan email</h2>
-  <p class="hint">link login dikirim ke email, tanpa password.</p>
-  <label>email</label>
-  <input id="em" type="email" placeholder="nama@email.com">
-  <button id="b1">kirim link &rarr;</button>
-  <div id="m1" class="msg"></div>
-</div>
+  <!-- Step 1: Input Email -->
+  <main class="main-card panel-animate" id="p1">
+    <div class="card-heading">
+      <h2>✉️ Masukkan Email Akun</h2>
+      <p class="hint">Tautan login akan dikirimkan ke email kamu tanpa perlu password.</p>
+    </div>
 
-<div class="panel hide" id="p2">
-  <h2>tempel link</h2>
-  <p class="hint">link terkirim ke <span id="w-em" style="color:var(--txt)">-</span>. copy link dari email, paste di sini.</p>
-  <label>link verifikasi</label>
-  <input id="lk" type="text" placeholder="https://... atau oobCode">
-  <button id="b2">&larr; kembali</button>
-  <button id="b3">verifikasi &rarr;</button>
-  <div id="m2" class="msg"></div>
-</div>
+    <div class="form-group">
+      <label for="em">Alamat Email</label>
+      <input id="em" class="input-field" type="email" placeholder="contoh: nama@gmail.com" autocomplete="email" required>
+    </div>
 
-<div class="panel hide" id="p3">
-  <h2 style="color:var(--acc)">premium aktif</h2>
-  <p class="hint">detail akun di bawah, token bisa dicopy.</p>
-  <div class="kv"><b>email</b><span id="r-em">-</span></div>
-  <div class="kv"><b>uid</b><span id="r-uid">-</span></div>
-  <div class="kv"><b>order</b><span id="r-ord">-</span></div>
-  <div style="margin-top:12px">
-    <label>id token</label>
-    <div class="tok" id="r-tok">-</div>
-    <button class="tiny sec" id="b4">copy token</button>
-    <button class="tiny sec" id="b5">aktivasi lain</button>
-  </div>
-</div>
+    <button id="b1" class="primary">
+      <span>Kirim Magic Link</span>
+      <span style="font-size:15px">&rarr;</span>
+    </button>
 
-<footer>unofficial &middot; reverse engineered &middot; use at your own risk</footer>
+    <div id="m1" class="msg" role="alert"></div>
+  </main>
+
+  <!-- Step 2: Paste Magic Link -->
+  <main class="main-card panel-animate hide" id="p2">
+    <div class="card-heading">
+      <h2>🔗 Tempel Link Verifikasi</h2>
+      <p class="hint">Magic link telah dikirim ke <strong id="w-em" style="color:var(--dark); text-decoration: underline;">-</strong>. Buka email kamu, salin tautannya, lalu tempel di bawah ini.</p>
+    </div>
+
+    <!-- PENTING: SPAM ALERT NOTICE -->
+    <div class="spam-alert" id="spam-notice-box">
+      <div class="spam-icon">📬</div>
+      <div class="spam-text">
+        <strong>Tidak ada email di Kotak Masuk Utama?</strong>
+        Mohon periksa folder <u>SPAM</u>, <u>Promosi (Promotions)</u>, atau <u>Junk</u> di aplikasi email kamu. Email dari Alight Motion / Firebase sering kali masuk ke folder tersebut.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lk">Tautan Verifikasi / Kode</label>
+      <input id="lk" class="input-field" type="text" placeholder="https://... atau tempel oobCode" autocomplete="off">
+    </div>
+
+    <div class="btn-row">
+      <button id="b2" class="sec" style="flex:1">
+        <span>&larr;</span> Kembali
+      </button>
+      <button id="b3" class="primary" style="flex:2">
+        <span>Verifikasi Akun</span>
+        <span style="font-size:15px">&rarr;</span>
+      </button>
+    </div>
+
+    <div id="m2" class="msg" role="alert"></div>
+  </main>
+
+  <!-- Step 3: Success & Token -->
+  <main class="main-card panel-animate hide" id="p3">
+    <div class="card-heading">
+      <h2 style="color: #15803D;">🎉 Premium Berhasil Aktif!</h2>
+      <p class="hint">Akun Alight Motion kamu sekarang sudah berstatus Premium. Detail akun dan token dapat disalin di bawah ini.</p>
+    </div>
+
+    <div class="result-box">
+      <div class="kv">
+        <b>Email</b>
+        <span id="r-em">-</span>
+      </div>
+      <div class="kv">
+        <b>UID</b>
+        <span id="r-uid">-</span>
+      </div>
+      <div class="kv">
+        <b>Order ID</b>
+        <span id="r-ord">-</span>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <label for="r-tok">ID Token (JWT)</label>
+      <div class="token-area" id="r-tok" tabindex="0">-</div>
+      
+      <div class="btn-row" style="margin-top:12px">
+        <button class="primary" id="b4" style="flex:1">
+          <span>📋</span> Salin Token
+        </button>
+        <button class="sec" id="b5" style="flex:1">
+          <span>🔄</span> Aktivasi Lain
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Panduan & Tata Cara (Saweria Info Card) -->
+  <section class="guide-card" id="guide-section">
+    <div class="guide-header" id="guide-toggle">
+      <div class="guide-title">
+        <span>📖</span>
+        <span>Tata Cara & Panduan Aktivasi</span>
+      </div>
+      <span class="toggle-pill" id="guide-pill">
+        <span id="guide-pill-text">Buka</span>
+        <span id="guide-arrow" style="font-size:10px">▼</span>
+      </span>
+    </div>
+
+    <div class="guide-content" id="guide-body">
+      <div class="guide-step">
+        <div class="step-num">1</div>
+        <div class="guide-step-body">
+          <strong>Masukkan Email:</strong> Ketik alamat email yang terdaftar di aplikasi Alight Motion Anda, lalu klik tombol <em>Kirim Magic Link</em>.
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">2</div>
+        <div class="guide-step-body">
+          <strong>Cek Email (Periksa SPAM!):</strong> Buka email Anda dari Alight Motion / Firebase. <span class="highlight-badge">PENTING:</span> Jika pesan tidak ada di kotak masuk utama, segera periksa folder <strong>Spam</strong> atau <strong>Promosi (Junk)</strong>.
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">3</div>
+        <div class="guide-step-body">
+          <strong>Salin Link Verifikasi:</strong> Klik kanan atau tekan lama tombol/link di dalam email tersebut, pilih <em>Salin Alamat Tautan (Copy Link Address)</em>.
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">4</div>
+        <div class="guide-step-body">
+          <strong>Tempel & Verifikasi:</strong> Masukkan link yang telah disalin ke kolom Langkah 2 dan klik <em>Verifikasi Akun</em>.
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">5</div>
+        <div class="guide-step-body">
+          <strong>Selesai:</strong> Akun Alight Motion Anda otomatis aktif Premium! Anda juga dapat menyalin token autentikasi jika diperlukan.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="app-footer">
+    <span>am / activate &middot; reverse engineered &middot; unofficial &middot; gunakan dengan bijak</span>
+  </footer>
 
 </div>
 
 <script>
 const $ = i => document.getElementById(i)
 
-fetch('/api/stats').then(r => r.json()).then(j => {
-  $('st-total').textContent = Number(j.total || 0).toLocaleString('id-ID')
-  $('st-today').textContent = Number(j.today || 0).toLocaleString('id-ID')
-}).catch(() => {})
+// Load Live Stats
+function refreshStats() {
+  fetch('/api/stats')
+    .then(r => r.json())
+    .then(j => {
+      if (j && j.success) {
+        $('st-total').textContent = Number(j.total || 0).toLocaleString('id-ID')
+        $('st-today').textContent = Number(j.today || 0).toLocaleString('id-ID')
+      }
+    })
+    .catch(() => {})
+}
+refreshStats()
 
+// Step Navigation with Animation
 const step = n => {
   for (let i = 1; i <= 3; i++) {
-    $('p' + i).classList.toggle('hide', i !== n)
-    $('n' + i).className = i < n ? 'done' : (i === n ? 'on' : '')
+    const p = $('p' + i)
+    const btn = $('n' + i)
+    if (i === n) {
+      p.classList.remove('hide')
+      p.classList.remove('panel-animate')
+      void p.offsetWidth // Trigger reflow for animation restart
+      p.classList.add('panel-animate')
+      btn.className = 'step-btn on'
+    } else {
+      p.classList.add('hide')
+      btn.className = i < n ? 'step-btn done' : 'step-btn'
+    }
   }
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
+
+// Display Alerts
 const say = (id, txt, ok) => {
   const m = $(id)
   m.textContent = txt
   m.className = 'msg ' + (ok ? 'ok' : 'err')
 }
-const busy = (b, on, t) => { b.disabled = on; if (t) b.textContent = t }
 
+// Button loading helper
+const busy = (b, on, t) => {
+  b.disabled = on
+  if (on) {
+    b.innerHTML = '<span class="spinner"></span> ' + (t || 'Memproses...')
+  } else if (t) {
+    b.innerHTML = t
+  }
+}
+
+// Step 1: Send Magic Link
 $('b1').onclick = async () => {
   const em = $('em').value.trim()
-  if (!em.includes('@')) return say('m1', 'email gak valid', 0)
-  const b = $('b1'); busy(b, true, 'mengirim...')
+  if (!em || !em.includes('@') || !em.includes('.')) {
+    return say('m1', '⚠️ Masukkan alamat email yang valid!', 0)
+  }
+  const b = $('b1')
+  busy(b, true, 'Mengirim Link...')
   try {
-    const r = await fetch('/api/send-link', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify({ email: em }) })
-    const j = await r.json()
-    if (j.success) { say('m1', 'link terkirim, cek email', 1); $('w-em').textContent = em; setTimeout(() => step(2), 700) }
-    else say('m1', j.message || 'gagal', 0)
-  } catch { say('m1', 'server gak nyambung', 0) }
-  busy(b, false); b.textContent = 'kirim link \u2192'
-}
-
-$('b2').onclick = () => step(1)
-
-$('b3').onclick = async () => {
-  const raw = $('lk').value.trim()
-  if (!raw) return say('m2', 'link kosong', 0)
-  const b = $('b3'); busy(b, true, 'verifikasi...')
-  try {
-    const r = await fetch('/api/verify-link', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify({ email: $('w-em').textContent, magicLink: raw }) })
+    const r = await fetch('/api/send-link', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: em })
+    })
     const j = await r.json()
     if (j.success) {
-      const d = j.data
-      $('r-em').textContent = d.email
-      $('r-uid').textContent = d.uid
-      $('r-ord').textContent = d.orderId || '-'
-      $('r-tok').textContent = d.idToken
-      window.__tok = d.idToken
-      step(3)
-    } else say('m2', j.message || 'gagal', 0)
-  } catch { say('m2', 'server gak nyambung', 0) }
-  busy(b, false); b.textContent = 'verifikasi \u2192'
+      say('m1', '✓ Link berhasil dikirim! Silakan periksa email kamu.', 1)
+      $('w-em').textContent = em
+      setTimeout(() => {
+        step(2)
+        $('lk').focus()
+      }, 700)
+    } else {
+      say('m1', '❌ ' + (j.message || 'Gagal mengirim magic link'), 0)
+    }
+  } catch (e) {
+    say('m1', '❌ Tidak dapat terhubung ke server. Coba lagi nanti.', 0)
+  }
+  busy(b, false, '<span>Kirim Magic Link</span> <span style="font-size:15px">&rarr;</span>')
 }
 
-$('b4').onclick = () => { navigator.clipboard.writeText(window.__tok || ''); $('b4').textContent = 'copied' }
-$('b5').onclick = () => { $('lk').value = ''; step(1) }
+// Allow Enter key on Email input
+$('em').addEventListener('keydown', e => {
+  if (e.key === 'Enter') $('b1').click()
+})
+
+// Step 2: Back Button
+$('b2').onclick = () => step(1)
+
+// Step 2: Verify Link
+$('b3').onclick = async () => {
+  const raw = $('lk').value.trim()
+  if (!raw) return say('m2', '⚠️ Masukkan tautan verifikasi atau kode oobCode terlebih dahulu!', 0)
+  const b = $('b3')
+  busy(b, true, 'Memverifikasi...')
+  try {
+    const r = await fetch('/api/verify-link', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: $('w-em').textContent, magicLink: raw })
+    })
+    const j = await r.json()
+    if (j.success) {
+      const d = j.data || {}
+      $('r-em').textContent = d.email || $('w-em').textContent
+      $('r-uid').textContent = d.uid || '-'
+      $('r-ord').textContent = d.orderId || '-'
+      $('r-tok').textContent = d.idToken || '-'
+      window.__tok = d.idToken || ''
+      step(3)
+      refreshStats()
+    } else {
+      say('m2', '❌ ' + (j.message || 'Verifikasi gagal. Pastikan link masih baru dan valid.'), 0)
+    }
+  } catch (e) {
+    say('m2', '❌ Terjadi kesalahan jaringan saat verifikasi.', 0)
+  }
+  busy(b, false, '<span>Verifikasi Akun</span> <span style="font-size:15px">&rarr;</span>')
+}
+
+// Allow Enter key on Link input
+$('lk').addEventListener('keydown', e => {
+  if (e.key === 'Enter') $('b3').click()
+})
+
+// Step 3: Copy Token
+$('b4').onclick = () => {
+  const token = window.__tok || $('r-tok').textContent || ''
+  if (!token || token === '-') return
+  navigator.clipboard.writeText(token).then(() => {
+    const orig = $('b4').innerHTML
+    $('b4').innerHTML = '<span>✅</span> Tersalin!'
+    $('b4').style.background = '#22C55E'
+    $('b4').style.color = '#FFFFFF'
+    setTimeout(() => {
+      $('b4').innerHTML = orig
+      $('b4').style.background = ''
+      $('b4').style.color = ''
+    }, 2000)
+  }).catch(() => {
+    $('b4').textContent = 'Gagal salin manual'
+  })
+}
+
+// Step 3: Activate Another Account
+$('b5').onclick = () => {
+  $('lk').value = ''
+  $('m1').style.display = 'none'
+  $('m2').style.display = 'none'
+  step(1)
+  $('em').focus()
+}
+
+// Guide Accordion Toggle
+const guideToggle = $('guide-toggle')
+const guideBody = $('guide-body')
+const guideArrow = $('guide-arrow')
+const guidePillText = $('guide-pill-text')
+let guideOpen = true
+
+guideToggle.onclick = () => {
+  guideOpen = !guideOpen
+  if (guideOpen) {
+    guideBody.classList.remove('hide')
+    guideArrow.textContent = '▼'
+    guidePillText.textContent = 'Tutup'
+  } else {
+    guideBody.classList.add('hide')
+    guideArrow.textContent = '▶'
+    guidePillText.textContent = 'Buka'
+  }
+}
+guidePillText.textContent = 'Tutup'
 </script>
 </body>
 </html>
